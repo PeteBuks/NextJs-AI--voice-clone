@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { voices } from "@/constants";
 
 import { Download, Loader2 } from "lucide-react";
@@ -67,7 +67,7 @@ const EdgeTTSForm = () => {
   const [success, setSuccess] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
 
-  const [audioKey, setAudioKey] = useState<number>(0);
+  const [audioSrc, setAudioSrc] = useState<string>("");
 
   const languages = getUniqueLanguages(voices);
 
@@ -117,6 +117,7 @@ const EdgeTTSForm = () => {
       const responseData = await response.json();
       setProgress(100);
       setResponseMessage(responseData.message);
+      setAudioSrc(`/api/edge-tts-generate`);
       setSuccess(true);
     } catch (error) {
       console.error("Error submitting the form:", error);
@@ -125,16 +126,8 @@ const EdgeTTSForm = () => {
       setSuccess(false);
     } finally {
       setIsLoading(false);
-      setAudioKey((prevKey) => prevKey + 1);
     }
   };
-
-  useEffect(() => {
-    if (responseMessage) {
-      // after form is submitted, this refreshes the audio key to force the audio element to re-render.
-      setAudioKey((prevKey) => prevKey + 1);
-    }
-  }, [responseMessage]);
 
   return (
     <div>
@@ -331,8 +324,8 @@ const EdgeTTSForm = () => {
         {success && (
           <div className="w-full flex justify-center">
             <div className="w-[350px] xl:w-[500px]">
-              <AudioPlayer src={`/output.mp3?key=${audioKey}`} />
-              <Link href={`/output.mp3?key=${audioKey}`}>
+              <AudioPlayer src={audioSrc} />
+              <Link href={audioSrc}>
                 <Button>
                   <Download />
                   Download

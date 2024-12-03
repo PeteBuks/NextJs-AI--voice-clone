@@ -1,3 +1,4 @@
+import fs from "fs/promises";
 import { NextRequest, NextResponse } from "next/server";
 import { EdgeTTS } from "@andresaya/edge-tts";
 
@@ -17,7 +18,7 @@ export const POST = async (req: NextRequest) => {
     };
 
     const tts = new EdgeTTS();
-    const outputPath = "public/output"; // Ensure the file path is correct
+    const outputPath = "/tmp/output.mp3"; // changr the path to public instead of tmp for local solution
 
     await tts.synthesize(
       stringifiedFormData.inputText,
@@ -30,9 +31,10 @@ export const POST = async (req: NextRequest) => {
     );
     await tts.toFile(outputPath);
 
-    return NextResponse.json({
+    const fileContent = await fs.readFile(outputPath);
+
+    return NextResponse.json(fileContent, {
       status: 200,
-      message: "Audio Generated successfully",
       headers: {
         "Content-Type": "audio/mpeg",
       },
