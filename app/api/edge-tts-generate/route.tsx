@@ -37,6 +37,7 @@ export const POST = async (req: NextRequest) => {
       status: 200,
       headers: {
         "Content-Type": "audio/mpeg",
+        "Content-Disposition": "attachment; filename=output.mp3",
       },
     });
   } catch (error) {
