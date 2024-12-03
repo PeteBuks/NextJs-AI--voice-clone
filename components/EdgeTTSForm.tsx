@@ -316,7 +316,7 @@ const EdgeTTSForm = () => {
       <div className={`my-4 ${isLoading ? "block" : "hidden"}`}>
         <Progress
           value={progress}
-          className="w-full mt-3 mx-auto bg-gray-200 h-2 rounded-full transition-all"
+          className="w-full mt-3 mx-auto bg-gray-200 h-[5px] rounded-full transition-all"
         />
       </div>
       <div className={`my-4 ${isLoading ? "hidden" : "block"}`}>

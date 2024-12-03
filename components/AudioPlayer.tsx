@@ -5,9 +5,10 @@ import { Pause } from "lucide-react";
 import { FastForward } from "lucide-react";
 import { Rewind } from "lucide-react";
 import WavesurferPlayer from "@wavesurfer/react";
+import WaveSurfer from "wavesurfer.js";
 
 const AudioPlayer = ({ src }: { src: string }) => {
-  const [wavesurfer, setWavesurfer] = useState<null>(null);
+  const [wavesurfer, setWavesurfer] = useState<WaveSurfer | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
@@ -23,7 +24,7 @@ const AudioPlayer = ({ src }: { src: string }) => {
     return `${minutes}:${paddedSeconds}`;
   };
 
-  const onReady = (ws) => {
+  const onReady = (ws: WaveSurfer) => {
     setWavesurfer(ws);
     setIsPlaying(false);
 
