@@ -64,7 +64,7 @@ const EdgeTTSForm = () => {
   const [, setSelectedVoice] = useState<string | null>(null);
   const [responseMessage, setResponseMessage] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const [submitted, setSubmitted] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
 
   const [audioKey, setAudioKey] = useState<number>(0);
@@ -117,11 +117,12 @@ const EdgeTTSForm = () => {
       const responseData = await response.json();
       setProgress(100);
       setResponseMessage(responseData.message);
-      setSubmitted(true);
+      setSuccess(true);
     } catch (error) {
       console.error("Error submitting the form:", error);
       setErrorMessage("Failed to submit the form. Please try again.");
       setProgress(0);
+      setSuccess(false);
     } finally {
       setIsLoading(false);
       setAudioKey((prevKey) => prevKey + 1);
@@ -327,7 +328,7 @@ const EdgeTTSForm = () => {
         )}
         {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
 
-        {submitted && (
+        {success && (
           <div className="w-full flex justify-center">
             <div className="w-[350px] xl:w-[500px]">
               <AudioPlayer src={`/output.mp3?key=${audioKey}`} />
