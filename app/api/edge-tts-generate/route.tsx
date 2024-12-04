@@ -6,14 +6,13 @@ export const POST = async (req: NextRequest) => {
 
   try {
     const formData = await req.json();
-    const { inputText, rate, volume, pitch, voice } = formData;
+    const { inputText, rate, pitch, voice } = formData;
 
     const tts = new EdgeTTS();
     const outputPath = "public/output"; // Ensure the file path is correct
 
     await tts.synthesize(inputText, voice, {
       rate: `${rate}%`,
-      volume: `${volume}%`,
       pitch: `${pitch}Hz`,
     });
     await tts.toFile(outputPath);

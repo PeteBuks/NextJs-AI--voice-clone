@@ -53,7 +53,6 @@ const formSchema = z.object({
   language: z.string().min(3, { message: "Please select a voice" }),
   voice: z.string().min(3, { message: "Please select a voice" }),
   rate: z.number().min(-100).max(100),
-  volume: z.number().min(-100).max(100),
   pitch: z.number().min(-100).max(100),
 });
 
@@ -89,7 +88,6 @@ const EdgeTTSForm = () => {
       language: "",
       voice: "",
       rate: 0,
-      volume: 0,
       pitch: 0,
     },
   });
@@ -242,27 +240,6 @@ const EdgeTTSForm = () => {
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel className="pl-3">Rate: {field.value}</FormLabel>
-                  <FormControl>
-                    <Slider
-                      value={[field.value]} // Slider value
-                      onValueChange={(value) => field.onChange(value[0])} // Update form state
-                      min={-100}
-                      max={100}
-                      step={1}
-                    />
-                  </FormControl>
-                  <FormMessage className="pl-3" />
-                </FormItem>
-              )}
-            />
-
-            {/* Volume Field */}
-            <FormField
-              control={form.control}
-              name="volume"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel className="pl-3">Volume: {field.value}</FormLabel>
                   <FormControl>
                     <Slider
                       value={[field.value]} // Slider value
