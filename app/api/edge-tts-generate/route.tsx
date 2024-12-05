@@ -9,26 +9,22 @@ export const POST = async (req: NextRequest) => {
     const { inputText, rate, pitch, voice } = formData;
 
     const tts = new EdgeTTS();
-    const outputPath = "public/output"; // Ensure the file path is correct
 
     await tts.synthesize(inputText, voice, {
       rate: `${rate}%`,
       pitch: `${pitch}Hz`,
     });
-    await tts.toFile(outputPath);
+    const audioBase64 = tts.toBase64();
 
     return NextResponse.json({
-      status: 200,
-      message: "Audio Generated successfully",
-      headers: {
-        "Content-Type": "audio/mpeg",
-      },
+      audio: audioBase64,
+      message: "Voice generated successfully",
     });
   } catch (error) {
     console.error("Error synthesizing voice:", error);
     return NextResponse.json({
       status: 500,
-      message: "Internal Server Error: ",
+      message: "Error synthesizing voice",
     });
   }
 };
