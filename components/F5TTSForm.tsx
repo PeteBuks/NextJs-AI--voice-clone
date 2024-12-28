@@ -122,7 +122,7 @@ const F5TTSForm = () => {
             name="ref_file"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="pl-3">Reference Audio</FormLabel>
+                <FormLabel className="pl-3">Reference Audio </FormLabel>
                 <FormControl>
                   <input
                     type="file"
