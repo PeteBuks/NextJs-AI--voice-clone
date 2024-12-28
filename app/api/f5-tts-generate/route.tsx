@@ -4,7 +4,6 @@ export async function POST(req: NextRequest) {
   try {
     // Parse the incoming request JSON
     const payload = await req.json();
-    const { gen_text, ref_file, ref_text } = payload;
 
     console.log(payload);
 
@@ -13,7 +12,7 @@ export async function POST(req: NextRequest) {
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ gen_text, ref_file, ref_text }),
+        body: JSON.stringify({ payload }),
       }
     );
 
